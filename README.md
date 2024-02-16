@@ -1,7 +1,7 @@
 # Title of Your Final Project Here 
 ## INFO 201 "Foundational Skills for Data Science"
 
-Authors: Your names here
+Authors: Michael Zaychikov, Ethan Ha, Rocky Tran, Sri Paruchuri
 
 
 For the Final Project -- Data Wrangling, add the following to this code repository:
