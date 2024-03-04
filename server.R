@@ -1,5 +1,10 @@
 
 trav_and_res_df <- read.csv("trav_and_res.csv")  # set working directory to source file location.
+pitt_df <- trav_and_res_df %>% filter(Sea.or.Pitt == "Pitt") %>% arrange(distance.from.arena.in.miles) %>% mutate(row = row_number())
+sea_df <- trav_and_res_df %>% filter(Sea.or.Pitt == "Sea") %>% arrange(distance.from.arena.in.miles) %>% mutate(row = row_number())
+sorted_df <- trav_and_res_df %>% arrange(distance.from.arena.in.miles) %>% mutate(row = row_number())
+
+
 
 server <- function(input, output){
   
@@ -116,7 +121,7 @@ server <- function(input, output){
     
   
     
-    if (input$team_selector == "Seattle Kraken") {
+    if (input$team_selector1 == "Seattle Kraken") {
       mapplot <- ggplot() +
         geom_polygon(data = us_states, aes(x = long, y = lat, group = group), fill = "aliceblue", color = "black") +
         geom_polygon(data = is_sea, aes(x = long, y = lat, group = group), fill = "darkseagreen2") +
@@ -124,7 +129,7 @@ server <- function(input, output){
         geom_polygon(data = far_from_sea, aes(x = long, y = lat, group = group), fill = "orange") +
         geom_polygon(data = very_far_from_sea, aes(x = long, y = lat, group = group), fill = "red") +
         labs(title = "Distance From Seattle") 
-    } else if (input$team_selector == "Pittsburgh Penguins") {
+    } else if (input$team_selector1 == "Pittsburgh Penguins") {
       mapplot <- ggplot() +
         geom_polygon(data = us_states, aes(x = long, y = lat, group = group), fill = "aliceblue", color = "black") +
         geom_polygon(data = is_pitt, aes(x = long, y = lat, group = group), fill = "darkseagreen2") +
@@ -140,7 +145,28 @@ server <- function(input, output){
     }
     
    
-    return(mapplot)
+    return(ggplotly(mapplot))
+  })
+  
+  output$lineplot <- renderPlotly({
+    
+    if (input$team_selector3 == "Seattle Kraken") {
+      lineplot <- ggplot() +
+        geom_line(data = sea_df, aes(x = row, y = distance.from.arena.in.miles)) + 
+        labs(title = "Sea")
+    } else if (input$team_selector3 == "Pittsburgh Penguins") {
+      lineplot <- ggplot() +
+        geom_line(data = pitt_df, aes(x = row, y = distance.from.arena.in.miles)) + 
+        labs(title = "Pitt")
+    } else {
+      lineplot <- ggplot() +
+        geom_line(data = sorted_df, aes(x = row, y = distance.from.arena.in.miles)) + 
+        labs(title = "Both")
+    }
+    
+    
+    return(ggplotly(lineplot))
+    
   })
   
   

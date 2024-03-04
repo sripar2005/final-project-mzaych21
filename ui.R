@@ -19,7 +19,7 @@ overview_tab <- tabPanel("Overview Tab Title",
 viz_1_sidebar <- sidebarPanel(
   h2("Choose Your Team!"),
   selectInput(
-    inputId = "team_selector",
+    inputId = "team_selector1",
     label = "Select a Team:",
     choices = c("Pittsburgh Penguins", "Seattle Kraken", "Both"),
     selected = "Both"
@@ -98,13 +98,18 @@ viz_2_tab <- tabPanel("Viz 2 tab title",
 ## VIZ 3 TAB INFO
 
 viz_3_sidebar <- sidebarPanel(
-  h2("Options for graph"),
-  #TODO: Put inputs for modifying graph here
+  h2("Choose Your Team!"),
+  selectInput(
+    inputId = "team_selector3",
+    label = "Select a Team:",
+    choices = c("Pittsburgh Penguins", "Seattle Kraken", "Both"),
+    selected = "Both"
+  )
 )
 
 viz_3_main_panel <- mainPanel(
   h2("Vizualization 3 Title"),
-  # plotlyOutput(outputId = "your_viz_1_output_id")
+  plotlyOutput(outputId = "lineplot")
 )
 
 viz_3_tab <- tabPanel("Viz 3 tab title",
